@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, Button, Form } from 'react-bootstrap';
 import { useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,11 +7,27 @@ import { changeCar, setCars } from './slices/carsSlice'
 import axios from 'axios'
 import RemoveModalWindow from './components/removeModalWindow';
 
+
 import { ToastContainer, toast } from 'react-toastify'
 
-function App() {
+const App = () =>  {
   const dispatch = useDispatch()
-  const carsNaw = useSelector(state => state.car.cars)
+  const currentCars = useSelector(state => state.car.cars)
+  const [sortConfig, setSortConfig] = useState({sortByYear: -1, sortByPrice: 1})
+
+const sortingByYear = () => {
+  const sortDerection = sortConfig.sortByYear
+  const sortedArray = [...currentCars].sort((a, b) => (a.year - b.year) * sortDerection) 
+  dispatch(setCars(sortedArray));
+  setSortConfig({...sortConfig, sortByYear: sortDerection === 1? -1: 1})
+};
+
+const sortingByPrice = () => {
+  const sortDerection = sortConfig.sortByPrice
+  const sortedArray = [...currentCars].sort((a, b) => (a.price - b.price)*sortDerection)
+  dispatch(setCars(sortedArray))
+  setSortConfig({...sortConfig, sortByPrice: sortDerection === 1? -1: 1})
+}
 
   useEffect(() => {
     const getContent = async () => {
@@ -41,16 +57,16 @@ function App() {
               <th>Name</th>
               <th>Model</th>
               <th>
-                <Button variant="light">Year</Button>
+                <Button variant="light" onClick={() => sortingByYear()}>Year</Button>
               </th>
               <th>
-                <Button variant="light">Price</Button>
+                <Button variant="light"onClick={() => sortingByPrice()}>Price</Button>
               </th>
               <th>Remove</th>
             </tr>
           </thead>
           <tbody>
-            {carsNaw.map(car => (
+            {currentCars.map(car => (
               <tr key={car.id}>
                 <td>
                   <Form.Control
