@@ -17,14 +17,14 @@ const carSlice = createSlice({
         car.id === payload.id ? payload : car,
       )
     },
-    deleteCar(state, { payload: { id } }) {
+    removeCar(state, { payload }) {
       const currentCars = state.cars
-      const newCars = currentCars.filter(car => car.id !== id)
+      const newCars = currentCars.filter(car => car.id !== payload)
       state.cars = newCars
     },
   },
 })
 
-export const { setCars, changeCar, deleteCar } = carSlice.actions
+export const { setCars, changeCar, removeCar } = carSlice.actions
 
 export default carSlice.reducer

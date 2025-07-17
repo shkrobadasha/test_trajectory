@@ -4,8 +4,8 @@ import { useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import applicationRoutes from './util/routes'
 import { changeCar, setCars } from './slices/carsSlice'
-import { setRemoveModalActive, setIdForRemove} from './slices/removeModalSlice';
 import axios from 'axios'
+import RemoveModalWindow from './components/removeModalWindow';
 
 import { ToastContainer, toast } from 'react-toastify'
 
@@ -32,11 +32,6 @@ function App() {
     getContent()
   }, [])
 
-  const handleDeleteRow = (id) => {
-    dispatch(setRemoveModalActive(true))
-    dispatch(setIdForRemove(id))
-  }
-
   return (
     <div className="d-flex justify-content-center mt-3">
       <div className="d-inline-block">
@@ -46,16 +41,17 @@ function App() {
               <th>Name</th>
               <th>Model</th>
               <th>
-                <Button variant="link">Year</Button>
+                <Button variant="light">Year</Button>
               </th>
               <th>
-                <Button variant="link">Price</Button>
+                <Button variant="light">Price</Button>
               </th>
+              <th>Remove</th>
             </tr>
           </thead>
           <tbody>
             {carsNaw.map(car => (
-              <tr key={car.id} onClick={(() => handleDeleteRow(car.id))}>
+              <tr key={car.id}>
                 <td>
                   <Form.Control
                     type="text"
@@ -80,6 +76,7 @@ function App() {
                     }
                   />
                 </td>
+                <td><RemoveModalWindow carId={car.id}/></td>
               </tr>
             ))}
           </tbody>
@@ -88,7 +85,6 @@ function App() {
   </div>
   )
 }
-
 
 export default App
 
