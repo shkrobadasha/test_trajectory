@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import applicationRoutes from './util/routes'
 import { changeCar, setCars } from './slices/carsSlice'
 import axios from 'axios'
-import RemoveModalWindow from './components/removeModalWindow';
+import RemoveModalWindow from './components/RemoveModalWindow';
 import { ToastContainer, toast } from 'react-toastify'
+import CarMap from './components/CarMap';
 
 const App = () =>  {
   const dispatch = useDispatch()
@@ -94,6 +95,7 @@ const sortingByPrice = () => {
           </tbody>
       </Table>
       <ToastContainer />
+      <CarMap />
     </div>
   </div>
   )
