@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
@@ -5,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { removeCar } from '../slices/carsSlice';
 
 
-const RemoveModalWindow = ({carId}) => {
+const RemoveModalWindow = ({ carId }) => {
 
   const dispatch = useDispatch()
 
