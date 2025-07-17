@@ -6,8 +6,6 @@ import applicationRoutes from './util/routes'
 import { changeCar, setCars } from './slices/carsSlice'
 import axios from 'axios'
 import RemoveModalWindow from './components/removeModalWindow';
-
-
 import { ToastContainer, toast } from 'react-toastify'
 
 const App = () =>  {
@@ -32,16 +30,14 @@ const sortingByPrice = () => {
   useEffect(() => {
     const getContent = async () => {
       try {
-        axios.get(applicationRoutes.dataRoute).then(result => dispatch(setCars(result.data)))
+        const result = await axios.get(applicationRoutes.dataRoute)
+        dispatch(setCars(result.data))
       } catch (error) {
         if (error.isAxiosError) {
-          //toast.error(t('errors.serverLoadDataError')\)
-          //toast.error('axiosError')
-          console.log('axiosError')
+          toast.error('axiosError')
         }
         else {
-          //toast.error('networkError')
-          console.log('networkError')
+          toast.error('networkError')
         }
       }
     }
@@ -97,6 +93,7 @@ const sortingByPrice = () => {
             ))}
           </tbody>
       </Table>
+      <ToastContainer />
     </div>
   </div>
   )
